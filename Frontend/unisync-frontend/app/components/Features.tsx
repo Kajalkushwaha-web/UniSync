@@ -5,28 +5,52 @@ import {
   BookOpen,
   MessageCircle,
 } from "lucide-react";
+import { Activity } from "react";
 
 export default function Features() {
   const features = [
-    {
-      icon: <Users size={36} />,
-      title: "Peer Matching",
-      description:
-        "Connect with students who share your interests, courses, and academic goals.",
-    },
-    {
-      icon: <MessageCircle size={36} />,
-      title: "Study Groups",
-      description:
-        "Collaborate in real-time with classmates through interactive study communities.",
-    },
-    {
-      icon: <BookOpen size={36} />,
-      title: "Resource Sharing",
-      description:
-        "Access notes, PDFs, assignments, and learning resources shared by peers.",
-    },
-  ];
+  {
+    icon: <Users size={36} />,
+    title: "Peer Matching",
+    description:
+      "Connect with students who share your interests, courses, and academic goals.",
+  },
+  
+  {
+    icon: <BookOpen size={36} />,
+    title: "Resource Sharing",
+    description:
+      "Access notes, PDFs, assignments, and learning resources shared by peers.",
+  },
+
+  // New Features
+  {
+    icon: <BookOpen size={36} />,
+    title: "Research Papers",
+    description:
+      "Discover, share, and collaborate on research papers to enhance academic learning and innovation.",
+  },
+  {
+    icon: <Users size={36} />,
+    title: "Student Collaboration",
+    description:
+      "Work together on projects, assignments, and ideas through a unified collaboration platform.",
+  },
+  {
+    icon: <MessageCircle size={36} />,
+    title: "Activity Tracking",
+    description:
+      "Monitor study progress, participation, achievements, and academic engagement in real time.",
+  },
+  
+  {
+  icon: <BookOpen size={36} />,
+  title: "Digital Agreements",
+  description:
+    "Create, manage, and securely sign digital agreements for academic projects, research collaborations, and student partnerships.",
+},
+  
+];
 
   return (
     <section className="relative py-24 overflow-hidden bg-gradient-to-b from-[#3B0A0A] via-[#5A120C] to-[#1A0808] text-white">

@@ -1,6 +1,46 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function SignupPage() {
+  const router = useRouter();
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log("SUBMIT FIRED");
+
+  if (!form.name || !form.email || !form.password || !form.confirm) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  if (form.password !== form.confirm) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  console.log("Account created:", form);
+  alert("Account created successfully!");
+
+  router.push("/dashboard");
+};
   return (
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#3B0A0A] via-[#8B1E12] to-[#F97316] flex items-center justify-center p-6">
 
@@ -19,51 +59,43 @@ export default function SignupPage() {
         <h1 className="text-3xl font-bold text-white leading-tight">
           Create account
         </h1>
+
         <p className="mt-2 text-white/70 text-sm">
           Join UniSync and start collaborating
         </p>
 
-        <form className="mt-7 flex flex-col gap-4">
+        <form onSubmit={handleSubmit} noValidate className="mt-7 flex flex-col gap-4">
+          <input
+            id="name"
+            type="text"
+            placeholder="Full name"
+            onChange={handleChange}
+            className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm"
+          />
 
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="name" className="text-xs text-white/75">Full name</label>
-            <input
-              id="name"
-              type="text"
-              placeholder="Full name"
-              className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm placeholder-white/40 outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-300/20 transition"
-            />
-          </div>
+          <input
+            id="email"
+            type="email"
+            placeholder="Email"
+            onChange={handleChange}
+            className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm"
+          />
 
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-xs text-white/75">Email</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm placeholder-white/40 outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-300/20 transition"
-            />
-          </div>
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleChange}
+            className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm"
+          />
 
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="text-xs text-white/75">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm placeholder-white/40 outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-300/20 transition"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="confirm" className="text-xs text-white/75">Confirm password</label>
-            <input
-              id="confirm"
-              type="password"
-              placeholder="Confirm password"
-              className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm placeholder-white/40 outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-300/20 transition"
-            />
-          </div>
+          <input
+            id="confirm"
+            type="password"
+            placeholder="Confirm password"
+            onChange={handleChange}
+            className="px-4 py-3 rounded-xl border border-white/15 bg-white/[0.07] text-white text-sm"
+          />
 
           <button
             type="submit"
