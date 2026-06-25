@@ -157,6 +157,78 @@ Ends the current session and clears the session cookie.
 
 ---
 
+### 5. Get Skills
+
+**`GET /api/skills`**
+
+Returns all available skills. Optionally filter by type.
+
+**Query Parameter (optional):**
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `type` | `string` | Filter by skill type — e.g. `SKILL`, `INTEREST` |
+
+**Success Response `200`:**
+```json
+{
+  "success": true,
+  "skills": [
+    { "id": "cm9x...", "name": "Machine Learning", "type": "INTEREST" },
+    { "id": "cm9y...", "name": "Cybersecurity", "type": "INTEREST" }
+  ]
+}
+```
+
+**Examples:**
+```
+GET /api/skills              → all skills
+GET /api/skills?type=SKILL   → only skills
+GET /api/skills?type=INTEREST → only interests
+```
+
+---
+
+### 6. Save User Skills
+
+**`POST /api/users/skills`**
+
+Saves (or updates) the authenticated user's selected skills. Safe to call multiple times — uses upsert so re-submitting the onboarding step won't create duplicates.
+
+**Requires:** Valid session cookie (user must be logged in).
+
+**Request Body:**
+```json
+{
+  "skills": [
+    { "skillId": "cm9x...", "proficiency": "2" },
+    { "skillId": "cm9y...", "proficiency": null }
+  ]
+}
+```
+
+**Validations:**
+- User must be authenticated
+- `skills` must be a non-empty array
+- All `skillId` values must exist in the `Skill` table
+
+**Success Response `200`:**
+```json
+{
+  "success": true
+}
+```
+
+**Error Responses:**
+
+| Status | Message |
+|--------|---------|
+| `401` | `"Not authenticated."` |
+| `400` | `"Skills must be a non-empty array."` |
+| `400` | `"One or more skill IDs are invalid."` |
+
+---
+
 ## Email Verification Flow
 
 ```
@@ -170,6 +242,7 @@ User clicks link → GET /api/verify-email?token=...
       ↓
 emailVerified timestamp set on user row
       ↓
+Redirect → /auth/login?verified=true
 Redirect
 ```
 
